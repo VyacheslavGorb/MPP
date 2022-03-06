@@ -1,0 +1,22 @@
+.header {
+    height: 6vh !important;
+}
+
+.footer {
+    height: 4vh;
+}
+
+.content {
+    min-height: 90vh;
+}
+
+#login_form {
+    padding: 3rem;
+    border-radius: 10px;
+    background-color: rgba(231, 231, 231, 0.34);
+    width: 30%;
+}
+
+.error_message {
+    width: 30%;
+}
