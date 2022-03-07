@@ -10,8 +10,6 @@ object ConnectionPool {
     getClass.getClassLoader.getResource(PROPERTIES_PATH).getPath
   ))
 
-  def getConnection: Connection = dataSource.getConnection
-
   def withConnection[T](func: Connection => T): T = {
     val connection = getConnection
     try {
@@ -20,6 +18,8 @@ object ConnectionPool {
       connection.close()
     }
   }
+
+  def getConnection: Connection = dataSource.getConnection
 
   def transaction[T](func: Connection => T): T = {
     val connection = getConnection

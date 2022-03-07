@@ -1,14 +1,18 @@
-GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file         controllers.Assets.versioned(path="/public", file: Asset)
 
-GET         /                    controllers.MainController.index
-GET         /index               controllers.MainController.index
+GET         /                     controllers.MainController.index
+GET         /index                controllers.MainController.index
 
-GET         /login               controllers.UserController.login
-POST        /login               controllers.UserController.handleLogin
+GET         /login                controllers.UserController.login
+POST        /login                controllers.UserController.handleLogin
 
-GET         /signup              controllers.UserController.signUp
-POST        /signup              controllers.UserController.handleSignUp
-GET         /logout              controllers.UserController.logout
+GET         /signup               controllers.UserController.signUp
+POST        /signup               controllers.UserController.handleSignUp
+GET         /logout               controllers.UserController.logout
 
-GET         /add_task            controllers.TaskController.addTask
-POST        /add_task            controllers.TaskController.handleAddTask
+GET         /add_task             controllers.TaskController.addTask
+POST        /add_task             controllers.TaskController.handleAddTask
+
+GET         /tasks                controllers.TaskController.allTasks
+GET         /download_file        controllers.TaskController.sendFile
+GET         /delete_file          controllers.TaskController.deleteFile

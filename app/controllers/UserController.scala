@@ -1,9 +1,8 @@
 package controllers
 
-import controllers.error.ErrorHandler.notFoundView
 import controllers.action.{AuthorizedAction, UnauthorizedAction}
+import controllers.error.ErrorHandler.notFoundView
 import controllers.form.Forms.{loginForm, signUpForm}
-import models.entity.User
 import models.service.UserService
 import play.api.mvc._
 
@@ -30,10 +29,10 @@ class UserController @Inject()(cc: ControllerComponents,
       params => {
         val user = UserService.findValidUser(params.login, params.password)
         if (user.isDefined)
-          Redirect("/").withSession(request.session + ("user_login" -> params.login))
+          Redirect(routes.MainController.index).withSession(request.session + ("user_login" -> params.login))
         else
-          Redirect("/login").flashing("error" -> "true")
-      },
+          Redirect(routes.UserController.login).flashing("error" -> "true")
+      }
     )
   }
 
@@ -42,18 +41,18 @@ class UserController @Inject()(cc: ControllerComponents,
       _ => notFoundView,
       params => {
         if (params.password != params.passwordConf) {
-          Redirect("/signup").flashing("error" -> s"Passwords mismatch")
+          Redirect(routes.UserController.signUp).flashing("error" -> s"Passwords mismatch")
         } else if (UserService.userExists(params.login)) {
-          Redirect("/signup").flashing("error" -> s"User with login ${params.login} already exists")
+          Redirect(routes.UserController.signUp).flashing("error" -> s"User with login ${params.login} already exists")
         } else {
           UserService.signUpUser(params.login, params.password)
-          Redirect("/").withSession(request.session + ("user_login" -> params.login))
+          Redirect(routes.MainController.index).withSession(request.session + ("user_login" -> params.login))
         }
       }
     )
   }
 
-  def logout(): Action[AnyContent] = authorizedAction{implicit request =>
-    Redirect("/").withNewSession
+  def logout(): Action[AnyContent] = authorizedAction { implicit request =>
+    Redirect(routes.MainController.index).withNewSession
   }
 }

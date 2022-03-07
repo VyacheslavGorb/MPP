@@ -32,7 +32,7 @@ class ErrorHandler extends HttpErrorHandler {
   }
 }
 
-object ErrorHandler{
+object ErrorHandler {
   def unauthorizedView(implicit r: Request[_]): Result =
     Unauthorized(views.html.error(403, "You don't have enough rights"))
 

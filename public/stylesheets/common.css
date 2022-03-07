@@ -20,3 +20,43 @@
 .error_message {
     width: 30%;
 }
+
+.todo-cards{
+    margin-top: 2rem;
+    min-height: 86vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.todo-card{
+    width: 90%;
+    height: 20%;
+    margin-bottom: 2rem;
+}
+
+
+.card-date{
+    font-size: 1.8rem;
+    font-weight:350;
+    margin: 0;
+}
+
+.card-status{
+    width: 10%;
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight:400;
+}
+
+.card-status:hover{
+    cursor: auto;
+}
+
+.card-control{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

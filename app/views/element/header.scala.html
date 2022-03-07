@@ -2,12 +2,13 @@
 <nav class="navbar navbar-light bg-light header">
     <a href="/" class="navbar-brand ms-4">Todo List</a>
     <div class="">
-        @if(request.session.get("user_login").isDefined){
-        <a href="#" class="btn btn-outline-success me-2">My Tasks</a>
-        <a href="/logout" class="btn btn-outline-secondary me-2">Log out</a>
-      }else{
-        <a href="/signup" class="btn btn-outline-secondary me-2">Sign Up</a>
-        <a href="/login" class="btn btn-outline-success me-2">Log In</a>
-      }
+        @if(request.session.get("user_login").isDefined) {
+            <a href="/add_task" class="btn btn-outline-primary me-2">Add task</a>
+            <a href="/tasks" class="btn btn-outline-primary me-2">My Tasks</a>
+            <a href="/logout" class="btn btn-outline-secondary me-2">Log out</a>
+        } else {
+            <a href="/signup" class="btn btn-outline-secondary me-2">Sign Up</a>
+            <a href="/login" class="btn btn-outline-success me-2">Log In</a>
+        }
     </div>
 </nav>
