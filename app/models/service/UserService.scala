@@ -11,12 +11,15 @@ object UserService {
     UserDao.insertUser(user)
   }
 
-  def userExists(login: String): Boolean ={
+  def userExists(login: String): Boolean = {
     UserDao.selectUserByLogin(login).isDefined
   }
 
-  def isCorrectPassword(login: String, password: String): Boolean = {
+  def findValidUser(login: String, password: String): Option[User] = {
     val user = UserDao.selectUserByLogin(login)
-    user.isDefined && PasswordUtil.checkPasswords(password, user.get.password)
+    if (user.isEmpty || !PasswordUtil.checkPasswords(password, user.get.password)) {
+      return None
+    }
+    user
   }
 }

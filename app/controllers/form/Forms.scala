@@ -1,9 +1,14 @@
 package controllers.form
 
+
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.{localDateTime, mapping, nonEmptyText, sqlTimestamp}
+
+import java.sql.Timestamp
+import java.time.LocalDateTime
 
 object Forms {
+  private val DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm"
 
   val loginForm: Form[Login] = Form(
     mapping(
@@ -20,8 +25,19 @@ object Forms {
       "confirm" -> nonEmptyText.verifying(_.matches("[0-9a-zA-Z]{8,20}")))
     (SignUp.apply)(SignUp.unapply)
   )
+
+  val addTaskForm: Form[AddTask] = Form(
+    mapping(
+      "title" -> nonEmptyText.verifying(c => c.length <= 50),
+      "desc" -> nonEmptyText.verifying(c => c.length <= 300),
+      "start" -> localDateTime(DATE_TIME_PATTERN),
+      "end" -> localDateTime(DATE_TIME_PATTERN),
+    )(AddTask.apply)(AddTask.unapply)
+  )
 }
 
 case class Login(login: String, password: String)
 
 case class SignUp(login: String, password: String, passwordConf: String)
+
+case class AddTask(title: String, description: String, startDateTime: LocalDateTime, endDateTime: LocalDateTime)

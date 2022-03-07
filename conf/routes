@@ -9,3 +9,6 @@ POST        /login               controllers.UserController.handleLogin
 GET         /signup              controllers.UserController.signUp
 POST        /signup              controllers.UserController.handleSignUp
 GET         /logout              controllers.UserController.logout
+
+GET         /add_task            controllers.TaskController.addTask
+POST        /add_task            controllers.TaskController.handleAddTask

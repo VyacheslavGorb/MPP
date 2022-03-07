@@ -1,13 +1,10 @@
 package models.pool
 
 import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
-import org.slf4j.LoggerFactory
 
 import java.sql.Connection
-import scala.util.{Failure, Success, Try}
 
 object ConnectionPool {
-  private val logger = LoggerFactory.getLogger(ConnectionPool.getClass)
   private val PROPERTIES_PATH = "hikari.properties"
   private val dataSource = new HikariDataSource(new HikariConfig(
     getClass.getClassLoader.getResource(PROPERTIES_PATH).getPath
@@ -16,14 +13,24 @@ object ConnectionPool {
   def getConnection: Connection = dataSource.getConnection
 
   def withConnection[T](func: Connection => T): T = {
-    val c = getConnection
-    val result = Try(func.apply(c)) match {
-      case Success(value) => value
-      case Failure(e) =>
-        logger.error("Error while executing query", e)
-        throw e
+    val connection = getConnection
+    try {
+      func.apply(connection)
+    } finally {
+      connection.close()
     }
-    c.close()
-    result
+  }
+
+  def transaction[T](func: Connection => T): T = {
+    val connection = getConnection
+    try {
+      connection.setAutoCommit(false)
+      val result = func.apply(connection)
+      connection.commit()
+      connection.setAutoCommit(true)
+      result
+    } finally {
+      connection.close()
+    }
   }
 }

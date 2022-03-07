@@ -7,7 +7,7 @@ import models.entity.User
 
 object Parsers {
   val userParser: RowParser[User] =
-    int("id") ~ str("login") ~ str("password") map {
-      case id ~ login ~ password => User(id, login, password)
+    int("u_id") ~ str("u_login") ~ str("u_password") map {
+      case id ~ login ~ password => User(login, password, id)
     }
 }

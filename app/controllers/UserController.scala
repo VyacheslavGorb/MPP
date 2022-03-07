@@ -3,6 +3,7 @@ package controllers
 import controllers.error.ErrorHandler.notFoundView
 import controllers.action.{AuthorizedAction, UnauthorizedAction}
 import controllers.form.Forms.{loginForm, signUpForm}
+import models.entity.User
 import models.service.UserService
 import play.api.mvc._
 
@@ -27,8 +28,8 @@ class UserController @Inject()(cc: ControllerComponents,
     loginForm.bindFromRequest.fold(
       _ => notFoundView,
       params => {
-        val isCorrect = UserService.isCorrectPassword(params.login, params.password)
-        if (isCorrect)
+        val user = UserService.findValidUser(params.login, params.password)
+        if (user.isDefined)
           Redirect("/").withSession(request.session + ("user_login" -> params.login))
         else
           Redirect("/login").flashing("error" -> "true")
