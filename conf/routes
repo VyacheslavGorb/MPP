@@ -16,3 +16,7 @@ POST        /add_task             controllers.TaskController.handleAddTask
 GET         /tasks                controllers.TaskController.allTasks
 GET         /download_file        controllers.TaskController.sendFile
 GET         /delete_file          controllers.TaskController.deleteFile
+GET         /delete_task          controllers.TaskController.deleteTask
+GET         /edit_task            controllers.TaskController.editTask
+POST        /update_task          controllers.TaskController.handleEditTask
+GET         /tasks_status         controllers.TaskController.tasksWIthStatus

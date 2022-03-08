@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS tasks
     t_user_id        BIGINT REFERENCES users (u_id),
     t_title          VARCHAR(50),
     t_description    TEXT(300),
-    t_status         ENUM ('PLANNED', 'IN_PROGRESS', 'DONE'),
+    t_status         ENUM ('PLANNED', 'IN_PROGRESS', 'DONE', 'OVERDUE'),
     t_start_datetime TIMESTAMP,
     t_end_datetime   TIMESTAMP
 );
